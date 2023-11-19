@@ -1,9 +1,12 @@
 .cards {
   /* fonts */
+  padding-bottom: 67px;
 }
 .card {
   display: flex;
   flex-direction: column;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 .cards__list {
@@ -12,7 +15,7 @@
   margin: 0;
   padding: 0;
   grid-template-columns: repeat(auto-fit, 282px);
-  grid-gap: 17px 20px;
+  grid-gap: 20px 17px;
   list-style-type: none;
 }
 
@@ -29,6 +32,9 @@
   padding: 25px 20px 25px 20px;
   align-items: center;
   justify-content: space-between;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .card__like-button {
@@ -37,4 +43,11 @@
   height: 18px;
   margin: 0;
   padding: 0;
+  border: none;
+}
+
+.card__title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }

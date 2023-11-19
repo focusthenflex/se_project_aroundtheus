@@ -1,7 +1,8 @@
 .profile {
   display: flex;
   align-items: center;
-  padding-top: 40px;
+  padding: 40px 0 32px;
+  border-top: 1px solid #545454;
 }
 
 .profile__info {
@@ -14,9 +15,11 @@
 
 .profile__edit-button {
   background: transparent url(../images/edit-icon.svg) center no-repeat;
-  max-height: 24px;
-  max-width: 24px;
+  height: 24px;
+  width: 24px;
   grid-area: button;
+  border: 1px solid white;
+  align-self: center;
 }
 
 .profile__add-button {
@@ -24,6 +27,7 @@
   width: 150px;
   height: 50px;
   margin-left: auto;
+  border: 2px solid white;
 }
 
 .profile__title {
@@ -50,4 +54,28 @@
   object-fit: cover;
   background-position: center;
   margin-right: 24px;
+}
+
+@media screen and (max-width: 480px) {
+  .profile {
+    background-color: pink;
+    flex-direction: column;
+  }
+
+  .profile__info {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .profile__description {
+    width: 100%;
+    text-align: center;
+  }
+
+  .profile__add-button {
+    margin: 0;
+    width: 100%;
+  }
 }
