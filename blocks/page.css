@@ -4,14 +4,16 @@
   padding-bottom: 60px;
 }
 
-.page-content {
+.page__content {
+  padding: 0 20px;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
 .page__section {
-  max-width: 880px;
+  box-sizing: border-box;
+  max-width: 882px;
   width: 100%;
   position: relative;
   margin: 0 auto;
