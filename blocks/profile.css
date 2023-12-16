@@ -3,7 +3,8 @@
   align-items: center;
   padding: 40px 0 32px;
   border-top: 1px solid #545454;
-  /* TODO: font-family:  */
+  font-family: "Inter", Arial, sans-serif;
+  color: white;
 }
 
 .profile__info {
