@@ -8,7 +8,6 @@
 
 .card__image {
   min-height: 282px;
-  /* width: 282px; */
   object-fit: cover;
 }
 
@@ -18,9 +17,6 @@
   background-color: white;
   padding: 25px 20px 25px 20px;
   align-items: center;
-  /* overflow: hidden; */
-  /* text-overflow: ellipsis; */
-  /* white-space: nowrap; */
 }
 
 .card__like-button {
