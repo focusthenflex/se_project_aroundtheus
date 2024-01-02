@@ -100,9 +100,33 @@
           </ul>
         </section>
         <footer class="footer page__section">
-          <p>&copy; 2023 Around The U.S.</p>
+          <p class="footer__copyright">&copy; 2023 Around The U.S.</p>
         </footer>
       </main>
+      <div class="modal">
+        <div class="modal__container">
+          <button class="modal__close"></button>
+          <p class="modal__heading">Edit profile</p>
+          <form class="modal__form">
+            <input
+              type="text"
+              placeholder="Name"
+              name="title"
+              id="profile__title"
+              class="modal__input"
+            />
+            <input
+              type="text"
+              placeholder="Description"
+              name="title"
+              id="profile__description"
+              class="modal__input"
+            />
+            <button class="modal__button">Save</button>
+          </form>
+        </div>
+      </div>
     </div>
+    <script src="scripts/index.js"></script>
   </body>
 </html>
