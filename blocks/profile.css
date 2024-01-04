@@ -22,6 +22,7 @@
   grid-area: button;
   border: 1px solid white;
   align-self: center;
+  cursor: pointer;
 }
 
 .profile__add-button {
@@ -31,6 +32,7 @@
   margin-left: auto;
   border: 2px solid white;
   border-radius: 2px;
+  cursor: pointer;
 }
 
 .profile__title {
