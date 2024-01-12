@@ -1,17 +1,24 @@
 .header {
+  flex-shrink: 0;
   padding-top: 45px;
   min-height: 74px;
-  min-width: 880px;
   margin-bottom: 41px;
   font-family: "Inter", Arial, sans-serif;
+  display: flex;
+  align-items: center;
 }
 
 .header__logo {
   width: 173px;
   height: 33px;
+  object-fit: contain;
 }
 
 @media screen and (max-width: 480px) {
+  .header {
+    min-height: 85px;
+  }
+
   .header__logo {
     height: 24px;
     width: 126px;
