@@ -3,8 +3,7 @@
 ## Table Of Contents
 1. [Intro](#intro)
 2. [Figma](#figma)
-3. [Images](#images)
-4. [Project Video](#video)
+4. [Project Videos](#project-videos)
   
 ## Intro
   
@@ -13,18 +12,16 @@ of HTML, CSS, and Javascript. It is made with the intention of introducing the c
 of grid boxes, flex boxes, fonts, media queries, section definitions, modals, and
 basic page renderings, along with other HTML and CSS concepts.
 
-This project is the culmination of three sprint's worth of work, in which the aforementioned concepts and list of technologies (list growing) are introduced during through interactive
+The end result of this project is the culmination of three sprint's worth of work, in which the aforementioned concepts and list of technologies (list growing) are introduced during through interactive
 lessons.
   
 ## Figma
   
-* [Link to the project on Figma](https://www.figma.com/file/ii4xxsJ0ghevUOcssTlHZv/Sprint-3%3A-Around-the-US?node-id=0%3A1)  
-  
-# Images
+* [Sprint 3 Figma Design](https://www.figma.com/file/ii4xxsJ0ghevUOcssTlHZv/Sprint-3%3A-Around-the-US?node-id=0%3A1)
 
-Sprint 3:
-![Sprint 3 Project Image](./images/README/Sprint_3.png)
+## Project Videos
+### __Click Images to See Video Content__
 
 
-# Project Video
-
+Sprint 3:  
+[![](./images/README/Sprint_3.png)](https://www.youtube.com/watch?v=II7nWWtRcxE)
