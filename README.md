@@ -6,7 +6,9 @@
 4. [Project Videos](#project-videos)
   
 ## Intro
-  
+
+**View the live site [here](https://focusthenflex.github.io/se_project_aroundtheus/)!**
+
 This project, entitled, "Around The U.S." is a project to demonstrate the basics
 of HTML, CSS, and Javascript. It is made with the intention of introducing the concepts
 of grid boxes, flex boxes, fonts, media queries, section definitions, modals, and
