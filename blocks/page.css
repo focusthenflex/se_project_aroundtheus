@@ -22,4 +22,7 @@
   .page__content {
     padding: 0;
   }
+  .page {
+    padding-bottom: 36px;
+  }
 }
