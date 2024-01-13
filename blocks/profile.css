@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   padding: 40px 0 32px;
-  border-top: 1px solid rgba(84, 84, 84, 1);
+  border-top: 1px solid rgba(84, 84, 84, 0.7);
   font-family: "Inter", Arial, sans-serif;
   color: white;
 }
@@ -108,6 +108,9 @@
     flex-direction: column;
     text-align: center;
   }
+  .profile__avatar {
+    margin: 0;
+  }
   .profile__info {
     display: flex;
     width: 100%;
@@ -137,7 +140,7 @@
   .profile__add-button {
     margin: 0 auto;
     width: 100%;
-    max-width: 282px;
+    width: 282px;
   }
 
   .profile__edit-button {

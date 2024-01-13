@@ -7,7 +7,7 @@
 }
 
 .card__image {
-  min-height: 282px;
+  height: 282px;
   object-fit: cover;
 }
 
@@ -26,6 +26,11 @@
   margin: 0;
   padding: 0;
   border: none;
+}
+
+.card__like-button:hover {
+  cursor: pointer;
+  opacity: 50%;
 }
 
 .card__title {
