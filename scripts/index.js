@@ -26,7 +26,7 @@ const initialCards = [
 ];
 
 // Elements
-const MODAL_OPENED_CLASS = "modal__opened";
+const MODAL_OPENED_CLASS = "modal_opened";
 
 const profileEditModal = document.querySelector("#profile-edit-modal");
 const profileEditButton = document.querySelector("#profile-edit-button");
@@ -52,15 +52,29 @@ const cardTemplate =
 const cardListEl = document.querySelector("#cards-list");
 
 // Functions
+function openEditProfileModal() {
+  profileEditModal.classList.add(MODAL_OPENED_CLASS);
+}
+
 function closeEditProfileModal() {
   profileEditModal.classList.remove(MODAL_OPENED_CLASS);
 }
 
+function updateProfileInfo(newProfileName, newProfileDescription) {
+  profileName.textContent = newProfileName;
+  profileDescription.textContent = newProfileDescription;
+}
+
+function fillProfileEditForm() {
+  profileNameField.value = profileName.textContent.trim();
+  profileDescriptionField.value = profileDescription.textContent.trim();
+}
+
 function getCardElement(data) {
-  let cardElement = cardTemplate.cloneNode(true);
-  let cardImageEl = cardElement.querySelector(".card__image");
-  let cardTitleEl = cardElement.querySelector(".card__title");
-  let cardButtonEl = cardElement.querySelector(".card__like-button");
+  const cardElement = cardTemplate.cloneNode(true);
+  const cardImageEl = cardElement.querySelector(".card__image");
+  const cardTitleEl = cardElement.querySelector(".card__title");
+  const cardButtonEl = cardElement.querySelector(".card__like-button");
   cardImageEl.src = data.link;
   cardImageEl.alt = data.name;
   cardTitleEl.textContent = data.name;
@@ -71,16 +85,16 @@ function getCardElement(data) {
 // Event Handlers
 function handleProfileEditSubmit(e) {
   e.preventDefault();
-  profileName.textContent = profileNameField.value.trim();
-  profileDescription.textContent = profileDescriptionField.value.trim();
+  const profileNameVal = profileNameField.value.trim();
+  const profileDescriptionVal = profileDescriptionField.value.trim();
+  updateProfileInfo(profileNameVal, profileDescriptionVal);
   closeEditProfileModal();
 }
 
 function handleOpenProfileEditForm() {
-  profileNameField.value = profileName.textContent.trim();
-  profileDescriptionField.value = profileDescription.textContent.trim();
+  fillProfileEditForm();
   // Remove whitespace
-  profileEditModal.classList.add(MODAL_OPENED_CLASS);
+  openEditProfileModal();
 }
 
 // Event Listeners
