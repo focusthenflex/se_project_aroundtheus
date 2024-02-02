@@ -39,6 +39,7 @@
             aria-label="Add"
             type="button"
             class="profile__add-button"
+            id="add-card-button"
           ></button>
         </section>
         <section class="cards page__section">
@@ -49,6 +50,7 @@
         </footer>
       </main>
     </div>
+    <!-- Edit Modal -->
     <div class="modal" id="profile-edit-modal">
       <div class="modal__container">
         <button
@@ -60,9 +62,9 @@
           <input
             type="text"
             placeholder="Name"
-            name="title"
-            id="profile-title-input"
-            class="modal__input"
+            name="name"
+            id="profile-name-input"
+            class="modal__input modal__input_type_name"
             required
           />
           <input
@@ -70,7 +72,7 @@
             placeholder="Description"
             name="description"
             id="profile-description-input"
-            class="modal__input"
+            class="modal__input modal__input_type_description"
             required
           />
           <button
@@ -78,6 +80,35 @@
             id="edit-profile-save-button"
             class="modal__button"
           >
+            Save
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Add Card Modal -->
+    <div class="modal" id="add-card-modal">
+      <div class="modal__container">
+        <button id="add-card-modal-close-button" class="modal__close"></button>
+        <h2 class="modal__heading">New Place</h2>
+        <form id="add-card-form" class="modal__form">
+          <input
+            type="text"
+            placeholder="Title"
+            name="title"
+            id="add-card-title-input"
+            class="modal__input modal__input_type_title"
+            required
+          />
+          <input
+            type="text"
+            placeholder="Image URL"
+            name="url"
+            id="add-card-url-input"
+            class="modal__input modal__input_type_url"
+            required
+          />
+          <button type="submit" id="add-card-save-button" class="modal__button">
             Save
           </button>
         </form>

@@ -39,12 +39,24 @@ const profileDescription = document.querySelector("#profile-description");
 const profileDescriptionField = document.querySelector(
   "#profile-description-input"
 );
-const profileNameField = document.querySelector("#profile-title-input");
+const profileNameField = document.querySelector("#profile-name-input");
 const editProfileSaveButton = document.querySelector(
   "#edit-profile-save-button"
 );
 
 const editProfileForm = document.querySelector("#edit-profile-form");
+
+const addCardModal = document.querySelector("#add-card-modal");
+const addCardButton = document.querySelector("#add-card-button");
+const addCardModalCloseButton = document.querySelector(
+  "#add-card-modal-close-button"
+);
+
+const newCardTitleField = document.querySelector("#add-card-title-input");
+const newCardURLField = document.querySelector("#add-card-url-input");
+const addCardSaveButton = document.querySelector("#add-card-save-button");
+
+const addCardForm = document.querySelector("#add-card-form");
 
 const cardTemplate =
   document.querySelector("#card-template").content.firstElementChild;
