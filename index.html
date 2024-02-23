@@ -22,6 +22,7 @@
             class="profile__avatar"
             src="./images/jacques-cousteau.jpg"
             alt="Jacques Cousteau"
+            id="profile-avatar"
           />
           <div class="profile__info">
             <h1 id="profile-title" class="profile__title">Jacques Cousteau</h1>
@@ -108,20 +109,39 @@
             class="modal__input modal__input_type_url"
             required
           />
-          <button type="submit" id="add-card-save-button" class="modal__button">
-            Save
+          <button
+            type="submit"
+            id="add-card-create-button"
+            class="modal__button"
+          >
+            Create
           </button>
         </form>
       </div>
     </div>
 
+    <!-- Image Modal -->
+    <div class="modal" id="picture-preview-modal">
+      <div class="modal__container modal__container-preview_image">
+        <button id="picture-preview-close-button" class="modal__close"></button>
+        <img id="picture-preview-image" class="modal__preview-image" />
+        <p id="picture-preview-caption" class="modal__preview-caption"></p>
+      </div>
+    </div>
+
     <template id="card-template">
       <li class="card">
+        <button
+          src=""
+          class="card__delete-button"
+          aria-label=""
+          type="button"
+        ></button>
         <img src="" class="card__image" alt="" />
         <div class="card__description">
           <h2 class="card__title"></h2>
           <button
-            aria-label=" Like"
+            aria-label=""
             class="card__like-button"
             type="button"
           ></button>
