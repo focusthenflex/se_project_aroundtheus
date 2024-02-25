@@ -59,7 +59,11 @@
           class="modal__close"
         ></button>
         <h2 class="modal__heading">Edit profile</h2>
-        <form id="edit-profile-form" class="modal__form">
+        <form
+          name="edit-profile-form"
+          id="edit-profile-form"
+          class="modal__form"
+        >
           <input
             type="text"
             placeholder="Name"
@@ -92,7 +96,7 @@
       <div class="modal__container">
         <button id="add-card-modal-close-button" class="modal__close"></button>
         <h2 class="modal__heading">New Place</h2>
-        <form id="add-card-form" class="modal__form">
+        <form name="add-card-form" id="add-card-form" class="modal__form">
           <input
             type="text"
             placeholder="Title"
@@ -123,7 +127,10 @@
     <!-- Image Modal -->
     <div class="modal" id="picture-preview-modal">
       <div class="modal__container modal__container-preview_image">
-        <button id="picture-preview-close-button" class="modal__close"></button>
+        <button
+          id="picture-preview-close-button"
+          class="modal__close modal__close-preview-image"
+        ></button>
         <img id="picture-preview-image" class="modal__preview-image" />
         <p id="picture-preview-caption" class="modal__preview-caption"></p>
       </div>
