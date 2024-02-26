@@ -196,25 +196,20 @@ profileEditButton.addEventListener("click", handleOpenProfileEditForm);
 
 addCardButton.addEventListener("click", () => toggleModal(addCardModal));
 
-const closeButtons = document.querySelectorAll(".modal__close");
+// This was marked as a 'could be improved', so reverting.
 
-closeButtons.forEach((button) => {
-  // find the closest popup
-  const popup = button.closest(".modal");
-  // set the listener
-  if (popup.id != "picture-preview-modal") {
-    button.addEventListener("click", () => toggleModal(popup));
-    // To reviewer: Comment this check out and it no longer works when going between
-    // different modal types
-  } else {
-    button.addEventListener("click", () => toggleImageModal(popup));
-  }
-});
+editProfileModalCloseButton.addEventListener("click", () =>
+  toggleModal(profileEditModal)
+);
+
+addCardModalCloseButton.addEventListener("click", () =>
+  toggleModal(addCardModal)
+);
 
 editProfileForm.addEventListener("submit", handleProfileEditSubmit);
 
 addCardForm.addEventListener("submit", handleAddCardSubmit);
-
+picturePreviewModalCloseButton.addEventListener("click", toggleImageModal);
 /* -------------------------------------------------------------------------- */
 /*                                 Initializer                                */
 /* -------------------------------------------------------------------------- */
