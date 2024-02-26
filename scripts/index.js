@@ -204,6 +204,8 @@ closeButtons.forEach((button) => {
   // set the listener
   if (popup.id != "picture-preview-modal") {
     button.addEventListener("click", () => toggleModal(popup));
+    // To reviewer: Comment this check out and it no longer works when going between
+    // different modal types
   } else {
     button.addEventListener("click", () => toggleImageModal(popup));
   }
