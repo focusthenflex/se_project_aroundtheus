@@ -23,8 +23,8 @@ function hideInputError(formEl, inputEl, { inputErrorClass, errorClass }) {
   errorMessageEl.classList.remove(errorClass);
 }
 
-function checkInputValidity(formEl, inputEl, options) {
-  if (inputEl.validity.valid) {
+function checkInputValidity(formEl, inputEl, options, newAddCard = false) {
+  if (inputEl.validity.valid || newAddCard) {
     hideInputError(formEl, inputEl, options);
   } else {
     showInputError(formEl, inputEl, options);
@@ -46,9 +46,9 @@ function toggleButtonState(inputEls, submitButton, { inactiveButtonClass }) {
 }
 
 function setEventListeners(formEl, options) {
-  const { inputSelector } = options;
+  const { inputSelector, submitButtonSelector } = options;
   const inputEls = [...formEl.querySelectorAll(inputSelector)];
-  const submitButton = formEl.querySelector(".modal__button");
+  const submitButton = formEl.querySelector(submitButtonSelector);
   inputEls.forEach((inputEl) => {
     inputEl.addEventListener("input", () => {
       checkInputValidity(formEl, inputEl, options);
@@ -58,8 +58,8 @@ function setEventListeners(formEl, options) {
 }
 
 function enableValidation(config) {
-  const formSelector = config.formSelector;
-  const formEls = [...document.querySelectorAll(config.formSelector)];
+  const { formSelector } = config;
+  const formEls = [...document.querySelectorAll(formSelector)];
   formEls.forEach((formEl) => {
     formEl.addEventListener("submit", (event) => {
       event.preventDefault();
