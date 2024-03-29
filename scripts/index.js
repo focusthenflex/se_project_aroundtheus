@@ -126,9 +126,9 @@ function updateLikeButton(button) {
 }
 
 function toggleImageModal({ name, link }) {
-  const previewImageSrc = picturePreviewModalImage.src;
   picturePreviewModalImage.src = link;
   pictureCaption.textContent = name;
+  picturePreviewModalImage.alt = name;
 
   toggleModal(picturePreviewModal);
 }
@@ -256,7 +256,6 @@ addCardButton.addEventListener("click", handleOpenAddCardForm);
 editProfileForm.addEventListener("submit", handleProfileEditSubmit);
 
 addCardForm.addEventListener("submit", handleAddCardSubmit);
-picturePreviewModalCloseButton.addEventListener("click", toggleImageModal);
 modals.forEach((modal) => {
   modal.addEventListener("mousedown", handleModalClose);
 });
