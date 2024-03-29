@@ -198,9 +198,9 @@ function handleOpenProfileEditForm() {
 }
 
 function handleOpenModalValidation(formEl, inputEls, submitButton, options) {
-  inputEls.forEach((inputEl) => {
-    checkInputValidity(formEl, inputEl, options);
-  });
+  // inputEls.forEach((inputEl) => {
+  //   checkInputValidity(formEl, inputEl, options);
+  // });
   toggleButtonState(inputEls, submitButton, options);
 }
 
@@ -232,7 +232,7 @@ const handleModalClose = (evt) => {
 
 profileEditButton.addEventListener("click", handleOpenProfileEditForm);
 
-addCardButton.addEventListener("click", () => toggleModal(addCardModal));
+addCardButton.addEventListener("click", handleOpenAddCardForm);
 
 // This was marked as a 'could be improved', so reverting.
 
