@@ -28,12 +28,13 @@ export default class FormValidator {
   }
 
   _checkInputValidity(inputEl) {
-    const newAddCard =
-      this._formEl.id == "add-card-form" &&
-      this._inputEls.every((inputEl) => inputEl.value === "")
-        ? true
-        : false;
-    if (inputEl.validity.valid || newAddCard) {
+    // const newAddCard =
+    //   this._formEl.id == "add-card-form" &&
+    //   this._inputEls.every((inputEl) => inputEl.value === "")
+    //     ? true
+    //     : false;
+    // if (inputEl.validity.valid || newAddCard) {
+    if (inputEl.validity.valid) {
       this._hideInputError(inputEl);
     } else {
       this._showInputError(inputEl);

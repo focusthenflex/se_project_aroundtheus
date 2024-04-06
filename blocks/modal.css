@@ -17,7 +17,7 @@
 .modal_opened {
   visibility: visible;
   opacity: 1;
-  transition: opacity 0.2s ease-in-out;
+  transition: visibility 0.5s, opacity 0.5s linear;
 }
 
 .modal__error {

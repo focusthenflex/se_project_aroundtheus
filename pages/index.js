@@ -108,10 +108,10 @@ function fillProfileEditForm() {
   profileDescriptionField.value = profileDescription.textContent.trim();
 }
 
-function toggleImageModal({ _name, _link }) {
-  picturePreviewModalImage.src = _link;
-  pictureCaption.textContent = _name;
-  picturePreviewModalImage.alt = _name;
+function toggleImageModal({ name, link }) {
+  picturePreviewModalImage.src = link;
+  pictureCaption.textContent = name;
+  picturePreviewModalImage.alt = name;
 
   toggleModal(picturePreviewModal);
 }
