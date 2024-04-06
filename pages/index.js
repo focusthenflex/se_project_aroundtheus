@@ -150,12 +150,15 @@ function handleAddCardSubmit(e) {
   };
   addCard(cardData);
   resetInputElements(e);
+  addCardValidator.resetValidation();
   toggleModal(addCardModal);
 }
 
 function handleOpenModalValidation(modal, formValidator) {
-  if (modal === profileEditModal) fillProfileEditForm();
-  formValidator.resetValidation();
+  if (modal === profileEditModal) {
+    fillProfileEditForm();
+    formValidator.resetValidation();
+  }
   toggleModal(modal);
 }
 
