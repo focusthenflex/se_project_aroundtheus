@@ -1,9 +1,9 @@
 const CARD_LIKED_CLASS = "card__like-button_active_true";
 
 export default class Card {
-  constructor({ name, link }, cardSelector, handleImageClick) {
-    this.name = name;
-    this.link = link;
+  constructor({ data, handleImageClick }, cardSelector) {
+    this.name = data.name;
+    this.link = data.link;
     this._cardSelector = cardSelector;
     this._handleImageClick = handleImageClick;
 
