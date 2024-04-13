@@ -35,7 +35,6 @@ export default class Modal {
   };
 
   _handleEscClose = (evt) => {
-    evt.preventDefault();
     if (evt.key === "Escape") this.close();
   };
 
@@ -45,6 +44,5 @@ export default class Modal {
       "mousedown",
       this._handleMousedownClose
     );
-    this._modalElement.addEventListener("keyup", this._handleEscClose);
   }
 }

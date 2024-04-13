@@ -83,6 +83,7 @@ const section = new Section(
 /* -------------------------------------------------------------------------- */
 function handleProfileEditSubmit({ name, description }) {
   userInfo.setUserInfo({ name, description });
+  profileEditModal.close();
 }
 
 function handleProfileEditOpen() {
@@ -102,6 +103,7 @@ function handleAddCardSubmit({ title, url }) {
   const newCard = getCardElement(cardData);
   section.addItem(newCard, "prepend");
   addCardValidator.resetValidation();
+  addCardModal.close();
 }
 
 /* -------------------------------------------------------------------------- */

@@ -13,10 +13,6 @@ export default class ModalWithForm extends Modal {
     this._modalForm.reset();
   }
 
-  open() {
-    super.open();
-  }
-
   _getInputValues() {
     const data = {};
     this._inputElements.forEach((inputField) => {
@@ -31,7 +27,6 @@ export default class ModalWithForm extends Modal {
     this._modalForm.addEventListener("submit", () => {
       const data = this._getInputValues();
       this._handleFormSubmit(data);
-      this._modalForm.reset();
       this.close();
     });
   }

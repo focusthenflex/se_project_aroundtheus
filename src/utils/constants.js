@@ -10,8 +10,8 @@ export const config = {
   inputErrorClass: "modal__input_type_error",
   errorClass: "modal__error_visible",
   sectionSelector: "cards-list",
-  profileNameSelector: "profile-title",
-  profileDescriptionSelector: "profile-description",
+  profileNameSelector: "#profile-title",
+  profileDescriptionSelector: "#profile-description",
 };
 
 export const initialCards = [
