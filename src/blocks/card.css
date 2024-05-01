@@ -52,10 +52,6 @@
   margin: 0;
 }
 
-.card__like-button:hover {
-  cursor: pointer;
-}
-
 .card__delete-button {
   background: transparent url(../images/delete-button.svg) center no-repeat;
   position: absolute;

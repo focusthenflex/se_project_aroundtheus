@@ -1,0 +1,31 @@
+import Modal from "./Modal.js";
+import { config } from "../utils/constants.js";
+
+class ModalWithFormSubmit extends Modal {
+  constructor({ modalSelector }) {
+    super({ modalSelector });
+    this._submitButton = this._modalElement.querySelector("form button");
+    this._initialButtonTextContent = this._submitButton.textContent.trim();
+  }
+
+  setSubmitAction(action) {
+    this._handleSubmitCallback = action;
+  }
+
+  setEventListeners() {
+    this._modalElement.addEventListener("submit", (evt) => {
+      evt.preventDefault();
+      this._handleSubmitCallback();
+    });
+
+    super.setEventListeners();
+  }
+
+  toggleLoadingText(loading = false) {
+    this._submitButton.textContent = loading
+      ? config.savingText
+      : this._initialButtonTextContent;
+  }
+}
+
+export default ModalWithFormSubmit;

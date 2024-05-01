@@ -1,31 +1,48 @@
 const CARD_LIKED_CLASS = "card__like-button_active_true";
 
 export default class Card {
-  constructor({ data, handleImageClick }, cardSelector) {
+  constructor(
+    { data, handleImageClick, handleLikeClick, handleDeleteClick },
+    cardSelector
+  ) {
     this.name = data.name;
     this.link = data.link;
+
+    this.isLiked = data.isLiked;
+    this._owner = data.owner;
+    this._createdAt = data.createdAt;
+
+    this._handleDeleteClick = handleDeleteClick;
+    this._handleLikeClick = handleLikeClick;
     this._cardSelector = cardSelector;
     this._handleImageClick = handleImageClick;
-
-    // this._updateLikeButton = this._updateLikeButton.bind(this);
+    this._id = data._id;
   }
 
-  _handleDeleteCard = () => {
+  deleteCard() {
     this._cardElement.remove();
     this._cardElement = null;
-  };
+  }
+
+  getCardID() {
+    return this._id;
+  }
 
   _setEventListeners() {
-    this._cardDeleteButton.addEventListener("click", this._handleDeleteCard);
+    this._cardDeleteButton.addEventListener("click", () => {
+      this._handleDeleteClick(this);
+    });
 
     this._cardImageEl.addEventListener("click", () => {
       this._handleImageClick(this);
     });
 
-    this._cardLikeButtonEl.addEventListener("click", this._updateLikeButton);
+    this._cardLikeButtonEl.addEventListener("click", () => {
+      this._handleLikeClick(this);
+    });
   }
 
-  _updateLikeButton = () => {
+  updateLikeButton = () => {
     this._cardLikeButtonEl.classList.toggle(CARD_LIKED_CLASS);
   };
 
@@ -55,6 +72,7 @@ export default class Card {
     this._cardLikeButtonEl =
       this._cardElement.querySelector(".card__like-button");
     this._cardLikeButtonEl.id = `${this._cardElement.id}-like-button`;
+    if (this.isLiked) this._cardLikeButtonEl.classList.add(CARD_LIKED_CLASS);
 
     this._cardDeleteButton = this._cardElement.querySelector(
       ".card__delete-button"

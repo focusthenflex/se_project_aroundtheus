@@ -10,7 +10,6 @@ export default class Modal {
     this._closeButton = this._modalElement.querySelector(
       `.${MODAL_CLOSE_BUTTON_SELECTOR}`
     );
-
     this.open = this.open.bind(this);
     this.close = this.close.bind(this);
   }
