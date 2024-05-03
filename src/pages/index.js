@@ -74,6 +74,7 @@ function createCard(data) {
             })
             .catch((err) => {
               console.error(err);
+              window.alert(`${err}`);
             })
             .finally(() => {
               deleteConfirmationModal.toggleLoadingText();
@@ -146,7 +147,10 @@ const section = new Section(
 /* -------------------------------------------------------------------------- */
 function handleProfileEditSubmit({ name, description }) {
   profileEditModal.toggleLoadingText(true);
-  api.updateProfile({ name, about: description });
+  api.updateProfile({ name, about: description }).catch((err) => {
+    console.error(err);
+    window.alert(`${err}`);
+  });
   userInfo.setUserInfo({ name, description });
   profileEditModal.toggleLoadingText();
   profileEditModal.close();
@@ -168,9 +172,15 @@ function handleAddCardSubmit({ title, url }) {
     link,
   };
 
-  api.createNewCard(cardData).then((data) => {
-    section.addItem(createCard(data), "prepend");
-  });
+  api
+    .createNewCard(cardData)
+    .then((data) => {
+      section.addItem(createCard(data), "prepend");
+    })
+    .catch((err) => {
+      console.error(err);
+      window.alert(`${err}`);
+    });
 
   addCardValidator.resetValidation();
   addCardModal.toggleLoadingText();
@@ -179,9 +189,15 @@ function handleAddCardSubmit({ title, url }) {
 
 function handleEditAvatarSubmit({ avatar }) {
   editAvatarModal.toggleLoadingText(true);
-  api.updateAvatar({ avatar }).then(({ avatar }) => {
-    userInfo.setUserInfo({ avatar });
-  });
+  api
+    .updateAvatar({ avatar })
+    .then(({ avatar }) => {
+      userInfo.setUserInfo({ avatar });
+    })
+    .catch((err) => {
+      console.error(err);
+      window.alert(`${err}`);
+    });
   editAvatarModal.toggleLoadingText();
 }
 
@@ -224,4 +240,5 @@ api
   })
   .catch((err) => {
     console.error(`${err}`);
+    window.alert(`${err}`);
   });

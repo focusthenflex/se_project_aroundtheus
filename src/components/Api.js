@@ -11,136 +11,91 @@ export default class Api {
   }
 
   getUser() {
-    return fetch(`${this._baseURL}/users/me`, {
+    const url = `${this._baseURL}/users/me`;
+    const options = {
       headers: this._headers,
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Error: ${res.status}`);
-      })
-      .then((res) => {
-        return res;
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    };
+    return this._request(url, options);
   }
 
   updateProfile({ name, about }) {
+    const url = `${this._baseURL}/users/me`;
     const method = "PATCH";
-    return fetch(`${this._baseURL}/users/me`, {
+    const options = {
       method: method,
       headers: this._headers,
       body: JSON.stringify({
         name,
         about,
       }),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Error: ${res.status}`);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    };
+    return this._request(url, options);
   }
 
   updateAvatar({ avatar }) {
+    const url = `${this._baseURL}/users/me/avatar`;
     const method = "PATCH";
-
-    return fetch(`${this._baseURL}/users/me/avatar`, {
+    const options = {
       headers: this._headers,
       method: method,
       body: JSON.stringify({
         avatar,
       }),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Error: ${res.status}`);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    };
+    return this._request(url, options);
   }
 
   getInitialCards() {
-    // const headers = Object.assign()
-    return fetch(`${this._baseURL}/cards`, {
+    const url = `${this._baseURL}/cards`;
+    const options = {
       headers: this._headers,
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Error: ${res.status}`);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    };
+    return this._request(url, options);
   }
 
   createNewCard({ name, link }) {
+    const url = `${this._baseURL}/cards`;
     const method = "POST";
-    return fetch(`${this._baseURL}/cards`, {
+    const options = {
       headers: this._headers,
       method: method,
       body: JSON.stringify({
         name,
         link,
       }),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Error: ${res.status}`);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    };
+    return this._request(url, options);
   }
 
   deleteCard(cardID) {
     const method = "DELETE";
-    return fetch(`${this._baseURL}/cards/${cardID}`, {
+    const url = `${this._baseURL}/cards/${cardID}`;
+    const options = {
       headers: this._headers,
       method: method,
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Error: ${res.status}`);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    };
+    return this._request(url, options);
   }
 
   updateCardLike(card) {
     const cardID = card.getCardID();
     const method = card.isLiked ? "DELETE" : "PUT";
-
-    return fetch(`${this._baseURL}/cards/${cardID}/likes`, {
+    const url = `${this._baseURL}/cards/${cardID}/likes`;
+    const options = {
       headers: this._headers,
       method: method,
-    })
-      .then((res) => {
-        if (res.ok) {
-          card.isLiked = !card.isLiked;
-          return res.json();
-        }
-        return Promise.reject(`Error: ${res.status}`);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    };
+    return this._request(url, options);
+  }
+
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Error: ${res.status}`);
+  }
+
+  _request(url, options) {
+    return fetch(url, options).then(this._checkResponse);
   }
 }
