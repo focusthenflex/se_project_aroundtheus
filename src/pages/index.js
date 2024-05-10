@@ -63,21 +63,30 @@ function createCard(data) {
           .catch((err) => console.error(err));
       },
       handleDeleteClick: (card) => {
-        deleteConfirmationModal.open();
-        deleteConfirmationModal.setSubmitAction(() => {
-          deleteConfirmationModal.toggleLoadingText(true);
+        const modal = deleteConfirmationModal;
+        modal.open();
+        modal.setSubmitAction(() => {
           api
             .deleteCard(card.getCardID())
             .then(() => {
-              card.deleteCard();
-              deleteConfirmationModal.close();
+              modal.enableLoadingState();
+              setTimeout(() => {
+                modal.toggleLoadingText(true, "Deleting...");
+              }, 1000);
+              setTimeout(() => {
+                card.deleteCard();
+                modal.toggleLoadingText(true, "Deleted!");
+                setTimeout(() => {
+                  modal.closeAfterSuccessfulSubmission();
+                }, 2500);
+              }, 3000);
             })
             .catch((err) => {
               console.error(err);
               window.alert(`${err}`);
             })
             .finally(() => {
-              deleteConfirmationModal.toggleLoadingText();
+              modal.toggleLoadingText(false);
             });
         });
       },
@@ -146,14 +155,34 @@ const section = new Section(
 /*                               Event Handlers                               */
 /* -------------------------------------------------------------------------- */
 function handleProfileEditSubmit({ name, description }) {
-  profileEditModal.toggleLoadingText(true);
-  api.updateProfile({ name, about: description }).catch((err) => {
-    console.error(err);
-    window.alert(`${err}`);
-  });
-  userInfo.setUserInfo({ name, description });
-  profileEditModal.toggleLoadingText();
-  profileEditModal.close();
+  const modal = profileEditModal;
+  const validator = editProfileValidator;
+
+  api
+    .updateProfile({ name, about: description })
+    .then(() => {
+      validator.disableFormElements();
+      setTimeout(() => {
+        modal.enableLoadingState("Saving...");
+      }, 1000);
+      setTimeout(() => {
+        userInfo.setUserInfo({ name, description });
+        modal.toggleLoadingText(true, "Saved!");
+        setTimeout(() => {
+          modal.closeAfterSuccessfulSubmission();
+          validator.resetValidation();
+          validator.enableFormElements();
+        }, 1500);
+      }, 3000);
+      modal.toggleLoadingText(true);
+    })
+    .catch((err) => {
+      console.error(err);
+      window.alert(`${err}`);
+    })
+    .finally(() => {
+      modal.toggleLoadingText();
+    });
 }
 
 function handleProfileEditOpen() {
@@ -164,9 +193,12 @@ function handleProfileEditOpen() {
 }
 
 function handleAddCardSubmit({ title, url }) {
-  addCardModal.toggleLoadingText(true);
+  const validator = addCardValidator;
+  const modal = addCardModal;
+
   const name = title.trim();
   const link = url.trim();
+
   const cardData = {
     name,
     link,
@@ -175,30 +207,57 @@ function handleAddCardSubmit({ title, url }) {
   api
     .createNewCard(cardData)
     .then((data) => {
-      section.addItem(createCard(data), "prepend");
+      validator.disableFormElements();
+      setTimeout(() => {
+        modal.enableLoadingState("Creating...");
+      }, 1000);
+      setTimeout(() => {
+        section.addItem(createCard(data), "prepend");
+        modal.toggleLoadingText(true, "Created!");
+        setTimeout(() => {
+          modal.closeAfterSuccessfulSubmission();
+          validator.resetValidation();
+          validator.enableFormElements();
+        }, 1500);
+      }, 3000);
     })
     .catch((err) => {
       console.error(err);
       window.alert(`${err}`);
+    })
+    .finally(() => {
+      modal.toggleLoadingText();
     });
-
-  addCardValidator.resetValidation();
-  addCardModal.toggleLoadingText();
-  addCardModal.close();
 }
 
 function handleEditAvatarSubmit({ avatar }) {
-  editAvatarModal.toggleLoadingText(true);
+  const modal = editAvatarModal;
+  const validator = editAvatarValidator;
+
   api
     .updateAvatar({ avatar })
     .then(({ avatar }) => {
-      userInfo.setUserInfo({ avatar });
+      validator.disableFormElements();
+      setTimeout(() => {
+        modal.enableLoadingState("Updating...");
+      }, 1000);
+      setTimeout(() => {
+        userInfo.setUserInfo({ avatar });
+        modal.toggleLoadingText(true, "Updated!");
+        setTimeout(() => {
+          modal.closeAfterSuccessfulSubmission();
+          validator.resetValidation();
+          validator.enableFormElements();
+        }, 1500);
+      }, 3000);
     })
     .catch((err) => {
       console.error(err);
       window.alert(`${err}`);
+    })
+    .finally(() => {
+      modal.toggleLoadingText();
     });
-  editAvatarModal.toggleLoadingText();
 }
 
 // function handle

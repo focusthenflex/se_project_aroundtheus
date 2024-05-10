@@ -10,16 +10,31 @@ export default class ModalWithForm extends Modal {
     this._submitButton = this._modalElement.querySelector("form button");
     this._initialButtonTextContent = this._submitButton.textContent.trim();
   }
+  enableLoadingState(loadingText) {
+    super.addWaitState();
+    this.toggleLoadingText(true, loadingText);
+  }
 
-  toggleLoadingText(loading = false) {
-    this._submitButton.textContent = loading
-      ? config.savingText
+  disableLoadingState() {
+    super.removeWaitState();
+    this.toggleLoadingText();
+  }
+
+  toggleLoadingText(isLoading, loadingText = "Saving...") {
+    this._submitButton.textContent = isLoading
+      ? loadingText
       : this._initialButtonTextContent;
   }
 
   close() {
     super.close();
     this._modalForm.reset();
+  }
+
+  closeAfterSuccessfulSubmission() {
+    this.close();
+    this.removeWaitState();
+    this.toggleLoadingText();
   }
 
   _getInputValues() {
@@ -34,11 +49,8 @@ export default class ModalWithForm extends Modal {
   setEventListeners() {
     super.setEventListeners();
     this._modalForm.addEventListener("submit", () => {
-      this.toggleLoadingText(true);
       const data = this._getInputValues();
       this._handleFormSubmit(data);
-      this.close();
-      this.toggleLoadingText();
     });
   }
 }

@@ -14,6 +14,14 @@ export default class Modal {
     this.close = this.close.bind(this);
   }
 
+  addWaitState() {
+    this._modalElement.classList.add("modal_opened-wait");
+  }
+
+  removeWaitState() {
+    this._modalElement.classList.remove("modal_opened-wait");
+  }
+
   open() {
     this._modalElement.classList.add(MODAL_OPENED_CLASS);
     document.addEventListener("keyup", this._handleEscClose);

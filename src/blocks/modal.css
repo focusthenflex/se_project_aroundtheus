@@ -20,6 +20,10 @@
   transition: visibility 0.5s, opacity 0.5s linear;
 }
 
+.modal_opened-wait:hover {
+  cursor: wait;
+}
+
 .modal__error {
   font-size: 12px;
   line-height: 15px;
@@ -152,6 +156,10 @@
 .modal__button:hover {
   opacity: 0.8;
   cursor: pointer;
+}
+
+.modal__button_disabled-wait_state:hover {
+  cursor: wait;
 }
 
 .modal__preview-image {

@@ -6,6 +6,7 @@ class ModalWithFormSubmit extends Modal {
     super({ modalSelector });
     this._submitButton = this._modalElement.querySelector("form button");
     this._initialButtonTextContent = this._submitButton.textContent.trim();
+    this._settings = config;
   }
 
   setSubmitAction(action) {
@@ -21,10 +22,32 @@ class ModalWithFormSubmit extends Modal {
     super.setEventListeners();
   }
 
-  toggleLoadingText(loading = false) {
-    this._submitButton.textContent = loading
-      ? config.savingText
+  closeAfterSuccessfulSubmission() {
+    this.close();
+    this.removeWaitState();
+    this.toggleButtonState(false);
+    this.toggleLoadingText();
+  }
+
+  enableLoadingState(loadingText) {
+    super.addWaitState();
+    this.toggleButtonState(true);
+  }
+
+  toggleLoadingText(isLoading, loadingText = "Deleting...") {
+    this._submitButton.textContent = isLoading
+      ? loadingText
       : this._initialButtonTextContent;
+  }
+
+  toggleButtonState(disable = false) {
+    if (disable == false) {
+      this._submitButton.classList.remove(this._settings.inactiveButtonClass);
+      this._submitButton.disabled = false;
+    } else {
+      this._submitButton.classList.add(this._settings.inactiveButtonClass);
+      this._submitButton.disabled = true;
+    }
   }
 }
 
