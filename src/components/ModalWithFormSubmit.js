@@ -22,32 +22,15 @@ class ModalWithFormSubmit extends Modal {
     super.setEventListeners();
   }
 
-  closeAfterSuccessfulSubmission() {
+  closeAfterSuccessfulSubmission(validator) {
     this.close();
     this.removeWaitState();
-    this.toggleButtonState(false);
     this.toggleLoadingText();
   }
 
   enableLoadingState(loadingText) {
     super.addWaitState();
-    this.toggleButtonState(true);
-  }
-
-  toggleLoadingText(isLoading, loadingText = "Deleting...") {
-    this._submitButton.textContent = isLoading
-      ? loadingText
-      : this._initialButtonTextContent;
-  }
-
-  toggleButtonState(disable = false) {
-    if (disable == false) {
-      this._submitButton.classList.remove(this._settings.inactiveButtonClass);
-      this._submitButton.disabled = false;
-    } else {
-      this._submitButton.classList.add(this._settings.inactiveButtonClass);
-      this._submitButton.disabled = true;
-    }
+    this.toggleLoadingText(true, loadingText);
   }
 }
 

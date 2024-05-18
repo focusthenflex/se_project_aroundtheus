@@ -52,4 +52,11 @@ export default class Modal {
       this._handleMousedownClose
     );
   }
+
+  toggleLoadingText(isLoading, loadingText = "Saving...") {
+    if (!this._submitButton) return;
+    this._submitButton.textContent = isLoading
+      ? loadingText
+      : this._initialButtonTextContent;
+  }
 }

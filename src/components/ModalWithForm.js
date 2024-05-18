@@ -20,12 +20,6 @@ export default class ModalWithForm extends Modal {
     this.toggleLoadingText();
   }
 
-  toggleLoadingText(isLoading, loadingText = "Saving...") {
-    this._submitButton.textContent = isLoading
-      ? loadingText
-      : this._initialButtonTextContent;
-  }
-
   close() {
     super.close();
     this._modalForm.reset();

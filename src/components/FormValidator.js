@@ -43,12 +43,6 @@ export default class FormValidator {
   }
 
   _checkInputValidity(inputEl) {
-    // const newAddCard =
-    //   this._formEl.id == "add-card-form" &&
-    //   this._inputEls.every((inputEl) => inputEl.value === "")
-    //     ? true
-    //     : false;
-    // if (inputEl.validity.valid || newAddCard) {
     if (inputEl.validity.valid) {
       this._hideInputError(inputEl);
     } else {
@@ -75,6 +69,7 @@ export default class FormValidator {
   }
 
   _toggleButtonState(disable = false) {
+    if (this._submitButton === null) return;
     if (this._hasValidInput(this._inputEls) && disable == false) {
       this._submitButton.classList.remove(this._settings.inactiveButtonClass);
       this._submitButton.disabled = false;

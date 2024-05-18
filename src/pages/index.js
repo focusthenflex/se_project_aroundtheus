@@ -31,12 +31,14 @@ const profileNameField = document.querySelector("#profile-name-input");
 const editProfileForm = document.forms["edit-profile-form"];
 const addCardForm = document.forms["add-card-form"];
 const editAvatarForm = document.forms["edit-avatar-form"];
+const deleteCardForm = document.forms["confirm-delete-form"];
 
 /* ------------------------------- Validators ------------------------------- */
 
 const addCardValidator = new FormValidator(addCardForm, config);
 const editProfileValidator = new FormValidator(editProfileForm, config);
 const editAvatarValidator = new FormValidator(editAvatarForm, config);
+const deleteCardValidator = new FormValidator(deleteCardForm, config);
 
 addCardValidator.enableValidation();
 editProfileValidator.enableValidation();
@@ -64,22 +66,18 @@ function createCard(data) {
       },
       handleDeleteClick: (card) => {
         const modal = deleteConfirmationModal;
+        const validator = deleteCardValidator;
         modal.open();
         modal.setSubmitAction(() => {
+          validator.disableFormElements();
+          modal.enableLoadingState("Deleting...");
           api
             .deleteCard(card.getCardID())
             .then(() => {
-              modal.enableLoadingState();
-              setTimeout(() => {
-                modal.toggleLoadingText(true, "Deleting...");
-              }, 1000);
-              setTimeout(() => {
-                card.deleteCard();
-                modal.toggleLoadingText(true, "Deleted!");
-                setTimeout(() => {
-                  modal.closeAfterSuccessfulSubmission();
-                }, 2500);
-              }, 3000);
+              card.deleteCard();
+              modal.toggleLoadingText(true, "Deleted!");
+              modal.closeAfterSuccessfulSubmission(deleteCardValidator);
+              validator.enableFormElements();
             })
             .catch((err) => {
               console.error(err);
@@ -158,23 +156,16 @@ function handleProfileEditSubmit({ name, description }) {
   const modal = profileEditModal;
   const validator = editProfileValidator;
 
+  validator.disableFormElements();
+  modal.enableLoadingState("Saving...");
+  userInfo.setUserInfo({ name, description });
+
   api
     .updateProfile({ name, about: description })
     .then(() => {
-      validator.disableFormElements();
-      setTimeout(() => {
-        modal.enableLoadingState("Saving...");
-      }, 1000);
-      setTimeout(() => {
-        userInfo.setUserInfo({ name, description });
-        modal.toggleLoadingText(true, "Saved!");
-        setTimeout(() => {
-          modal.closeAfterSuccessfulSubmission();
-          validator.resetValidation();
-          validator.enableFormElements();
-        }, 1500);
-      }, 3000);
-      modal.toggleLoadingText(true);
+      modal.toggleLoadingText(true, "Saved!");
+      modal.closeAfterSuccessfulSubmission(editProfileValidator);
+      validator.enableFormElements();
     })
     .catch((err) => {
       console.error(err);
@@ -204,22 +195,17 @@ function handleAddCardSubmit({ title, url }) {
     link,
   };
 
+  validator.disableFormElements();
+  modal.enableLoadingState("Creating...");
+
   api
     .createNewCard(cardData)
     .then((data) => {
-      validator.disableFormElements();
-      setTimeout(() => {
-        modal.enableLoadingState("Creating...");
-      }, 1000);
-      setTimeout(() => {
-        section.addItem(createCard(data), "prepend");
-        modal.toggleLoadingText(true, "Created!");
-        setTimeout(() => {
-          modal.closeAfterSuccessfulSubmission();
-          validator.resetValidation();
-          validator.enableFormElements();
-        }, 1500);
-      }, 3000);
+      section.addItem(createCard(data), "prepend");
+      modal.toggleLoadingText(true, "Created!");
+
+      modal.closeAfterSuccessfulSubmission(addCardValidator);
+      validator.enableFormElements();
     })
     .catch((err) => {
       console.error(err);
@@ -234,22 +220,16 @@ function handleEditAvatarSubmit({ avatar }) {
   const modal = editAvatarModal;
   const validator = editAvatarValidator;
 
+  validator.disableFormElements();
+  modal.enableLoadingState("Updating...");
+
   api
     .updateAvatar({ avatar })
     .then(({ avatar }) => {
-      validator.disableFormElements();
-      setTimeout(() => {
-        modal.enableLoadingState("Updating...");
-      }, 1000);
-      setTimeout(() => {
-        userInfo.setUserInfo({ avatar });
-        modal.toggleLoadingText(true, "Updated!");
-        setTimeout(() => {
-          modal.closeAfterSuccessfulSubmission();
-          validator.resetValidation();
-          validator.enableFormElements();
-        }, 1500);
-      }, 3000);
+      userInfo.setUserInfo({ avatar });
+      modal.toggleLoadingText(true, "Updated!");
+      modal.closeAfterSuccessfulSubmission();
+      validator.enableFormElements();
     })
     .catch((err) => {
       console.error(err);
@@ -260,8 +240,6 @@ function handleEditAvatarSubmit({ avatar }) {
     });
 }
 
-// function handle
-
 /* -------------------------------------------------------------------------- */
 /*                               Event Listeners                              */
 /* -------------------------------------------------------------------------- */
@@ -269,6 +247,7 @@ function handleEditAvatarSubmit({ avatar }) {
 profileEditButton.addEventListener("click", handleProfileEditOpen);
 
 addCardButton.addEventListener("click", () => {
+  addCardValidator.resetValidation();
   addCardModal.open();
 });
 
@@ -285,7 +264,6 @@ editAvatarModal.setEventListeners();
 /* -------------------------------------------------------------------------- */
 /*                                 Initializer                                */
 /* -------------------------------------------------------------------------- */
-// section.renderItems(initialCards);
 
 api
   .getAppInfo()

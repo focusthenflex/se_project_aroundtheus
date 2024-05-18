@@ -12,7 +12,6 @@ export default class UserInfo {
   }
 
   getUserInfo() {
-    // TODO: Do we need to return avatar here?
     return {
       name: this._nameElement.textContent.trim(),
       description: this._descriptionElement.textContent.trim(),
