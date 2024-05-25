@@ -3,51 +3,118 @@ import FormValidator from "../components/FormValidator.js";
 import Section from "../components/Section.js";
 import ModalWithForm from "../components/ModalWithForm.js";
 import ModalWithImage from "../components/ModalWithImage.js";
+import ModalWithFormSubmit from "../components/ModalWithFormSubmit.js";
 import UserInfo from "../components/UserInfo.js";
-import { config, initialCards } from "../utils/constants.js";
+import { config } from "../utils/constants.js";
+import Api from "../components/Api.js";
 import "./index.css";
 
 /* -------------------------------------------------------------------------- */
 /*                                  Elements                                  */
 /* -------------------------------------------------------------------------- */
 
+/* ----------------------------- Button Elements ---------------------------- */
+
 const profileEditButton = document.querySelector("#profile-edit-button");
+const addCardButton = document.querySelector("#add-card-button");
+const editAvatarButton = document.querySelector(
+  "#profile-avatar-update-button"
+);
 
 const profileDescriptionField = document.querySelector(
   "#profile-description-input"
 );
 const profileNameField = document.querySelector("#profile-name-input");
 
+/* ------------------------------ Form Elements ----------------------------- */
+
 const editProfileForm = document.forms["edit-profile-form"];
 const addCardForm = document.forms["add-card-form"];
+const editAvatarForm = document.forms["edit-avatar-form"];
+const deleteCardForm = document.forms["confirm-delete-form"];
 
-const addCardButton = document.querySelector("#add-card-button");
+/* ------------------------------- Validators ------------------------------- */
 
 const addCardValidator = new FormValidator(addCardForm, config);
 const editProfileValidator = new FormValidator(editProfileForm, config);
+const editAvatarValidator = new FormValidator(editAvatarForm, config);
+const deleteCardValidator = new FormValidator(deleteCardForm, config);
 
 addCardValidator.enableValidation();
 editProfileValidator.enableValidation();
+editAvatarValidator.enableValidation();
 
+let userId = null;
 /* -------------------------------------------------------------------------- */
 /*                                  Functions                                 */
 /* -------------------------------------------------------------------------- */
 
-function getCardElement(data) {
-  return new Card(
+function createCard(data) {
+  const card = new Card(
     {
       data,
       handleImageClick: () => {
         picturePreviewModal.open(data);
       },
+      handleLikeClick: (card) => {
+        api
+          .updateCardLike(card)
+          .then(() => {
+            card.updateLikeButton();
+          })
+          .catch((err) => console.error(err));
+      },
+      handleDeleteClick: (card) => {
+        const modal = deleteConfirmationModal;
+        const validator = deleteCardValidator;
+        modal.open();
+        modal.setSubmitAction(() => {
+          validator.disableFormElements();
+          modal.enableLoadingState("Deleting...");
+          api
+            .deleteCard(card.getCardID())
+            .then(() => {
+              card.deleteCard();
+              modal.toggleLoadingText(true, "Deleted!");
+              modal.close();
+              modal.disableLoadingState();
+            })
+            .catch((err) => {
+              console.error(err);
+              window.alert(`${err}`);
+            })
+            .finally(() => {
+              modal.toggleLoadingText(false);
+              validator.enableFormElements();
+            });
+        });
+      },
     },
     "#card-template"
-  ).getView();
+  );
+  return card.getView();
 }
 
 /* -------------------------------------------------------------------------- */
 /*                                  Instantiations                            */
 /* -------------------------------------------------------------------------- */
+
+const api = new Api({
+  baseURL: "https://around-api.en.tripleten-services.com/v1",
+  headers: {
+    authorization: "4b03e5e2-04ef-492f-b466-56323ec84b15",
+    "Content-Type": "application/json",
+  },
+});
+
+/* ------------------------- User Info Instantiation ------------------------ */
+const userInfo = new UserInfo({
+  profileNameSelector: config.profileNameSelector,
+  profileDescriptionSelector: config.profileDescriptionSelector,
+  avatarSelector: config.avatarSelector,
+});
+
+/* -------------------------- Modal Initializations ------------------------- */
 
 const picturePreviewModal = new ModalWithImage({
   modalSelector: "#picture-preview-modal",
@@ -58,21 +125,26 @@ const profileEditModal = new ModalWithForm({
   handleFormSubmit: handleProfileEditSubmit,
 });
 
-const userInfo = new UserInfo({
-  profileNameSelector: config.profileNameSelector,
-  profileDescriptionSelector: config.profileDescriptionSelector,
-});
-
 const addCardModal = new ModalWithForm({
   modalSelector: "#add-card-modal",
   handleFormSubmit: handleAddCardSubmit,
 });
 
+const deleteConfirmationModal = new ModalWithFormSubmit({
+  modalSelector: config.deleteCardPopupSelector,
+});
+
+const editAvatarModal = new ModalWithForm({
+  modalSelector: "#avatar-edit-modal",
+  handleFormSubmit: handleEditAvatarSubmit,
+});
+
+/* -------------------------- Section Instantiation ------------------------- */
+
 const section = new Section(
   {
-    items: initialCards,
     renderer: (data) => {
-      section.addItem(getCardElement(data));
+      section.addItem(createCard(data));
     },
   },
   config.sectionSelector
@@ -82,8 +154,27 @@ const section = new Section(
 /*                               Event Handlers                               */
 /* -------------------------------------------------------------------------- */
 function handleProfileEditSubmit({ name, description }) {
-  userInfo.setUserInfo({ name, description });
-  profileEditModal.close();
+  const modal = profileEditModal;
+  const validator = editProfileValidator;
+
+  validator.disableFormElements();
+  modal.enableLoadingState("Saving...");
+  api
+    .updateProfile({ name, about: description })
+    .then(() => {
+      userInfo.setUserInfo({ name, description });
+      modal.toggleLoadingText(true, "Saved!");
+      modal.close();
+      modal.disableLoadingState();
+    })
+    .catch((err) => {
+      console.error(err);
+      window.alert(`${err}`);
+    })
+    .finally(() => {
+      modal.toggleLoadingText();
+      validator.enableFormElements();
+    });
 }
 
 function handleProfileEditOpen() {
@@ -94,16 +185,61 @@ function handleProfileEditOpen() {
 }
 
 function handleAddCardSubmit({ title, url }) {
+  const validator = addCardValidator;
+  const modal = addCardModal;
+
   const name = title.trim();
   const link = url.trim();
+
   const cardData = {
     name,
     link,
   };
-  const newCard = getCardElement(cardData);
-  section.addItem(newCard, "prepend");
-  addCardValidator.resetValidation();
-  addCardModal.close();
+
+  validator.disableFormElements();
+  modal.enableLoadingState("Creating...");
+
+  api
+    .createNewCard(cardData)
+    .then((data) => {
+      section.addItem(createCard(data), "prepend");
+      modal.toggleLoadingText(true, "Created!");
+      modal.close();
+      modal.disableLoadingState();
+    })
+    .catch((err) => {
+      console.error(err);
+      window.alert(`${err}`);
+    })
+    .finally(() => {
+      modal.toggleLoadingText();
+      validator.enableFormElements();
+    });
+}
+
+function handleEditAvatarSubmit({ avatar }) {
+  const modal = editAvatarModal;
+  const validator = editAvatarValidator;
+
+  validator.disableFormElements();
+  modal.enableLoadingState("Updating...");
+
+  api
+    .updateAvatar({ avatar })
+    .then(({ avatar }) => {
+      userInfo.setUserInfo({ avatar });
+      modal.enableLoadingState("Updated!");
+      modal.close();
+      modal.disableLoadingState();
+    })
+    .catch((err) => {
+      console.error(err);
+      window.alert(`${err}`);
+    })
+    .finally(() => {
+      modal.toggleLoadingText();
+      validator.enableFormElements();
+    });
 }
 
 /* -------------------------------------------------------------------------- */
@@ -113,15 +249,35 @@ function handleAddCardSubmit({ title, url }) {
 profileEditButton.addEventListener("click", handleProfileEditOpen);
 
 addCardButton.addEventListener("click", () => {
+  addCardValidator.resetValidation();
   addCardModal.open();
+});
+
+editAvatarButton.addEventListener("click", () => {
+  editAvatarModal.open();
 });
 
 picturePreviewModal.setEventListeners();
 profileEditModal.setEventListeners();
 addCardModal.setEventListeners();
+deleteConfirmationModal.setEventListeners();
+editAvatarModal.setEventListeners();
 
 /* -------------------------------------------------------------------------- */
 /*                                 Initializer                                */
 /* -------------------------------------------------------------------------- */
 
-section.renderItems(initialCards);
+api
+  .getAppInfo()
+  .then(([initialCards, userInformation]) => {
+    userInfo.setUserInfo({
+      name: userInformation.name,
+      description: userInformation.about,
+      avatar: userInformation.avatar,
+    });
+    section.renderItems(initialCards);
+  })
+  .catch((err) => {
+    console.error(`${err}`);
+    window.alert(`${err}`);
+  });

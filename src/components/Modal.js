@@ -10,9 +10,26 @@ export default class Modal {
     this._closeButton = this._modalElement.querySelector(
       `.${MODAL_CLOSE_BUTTON_SELECTOR}`
     );
-
     this.open = this.open.bind(this);
     this.close = this.close.bind(this);
+  }
+
+  enableLoadingState(loadingText) {
+    this.addWaitState();
+    this.toggleLoadingText(true, loadingText);
+  }
+
+  disableLoadingState() {
+    this.removeWaitState();
+    this.toggleLoadingText();
+  }
+
+  addWaitState() {
+    this._modalElement.classList.add("modal_opened-wait");
+  }
+
+  removeWaitState() {
+    this._modalElement.classList.remove("modal_opened-wait");
   }
 
   open() {
@@ -44,5 +61,12 @@ export default class Modal {
       "mousedown",
       this._handleMousedownClose
     );
+  }
+
+  toggleLoadingText(isLoading, loadingText = "Saving...") {
+    if (!this._submitButton) return;
+    this._submitButton.textContent = isLoading
+      ? loadingText
+      : this._initialButtonTextContent;
   }
 }

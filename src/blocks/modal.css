@@ -20,6 +20,10 @@
   transition: visibility 0.5s, opacity 0.5s linear;
 }
 
+.modal_opened-wait:hover {
+  cursor: wait;
+}
+
 .modal__error {
   font-size: 12px;
   line-height: 15px;
@@ -40,6 +44,12 @@
   margin-bottom: 48px;
 }
 
+.modal__label-edit_avatar {
+  position: relative;
+  display: block;
+  margin-bottom: 48px;
+}
+
 .modal__error_visible {
   opacity: 1;
 }
@@ -53,6 +63,14 @@
   min-height: 330px;
   box-sizing: border-box;
   padding: 34px 36px;
+}
+
+.modal__container-edit_avatar {
+  min-height: auto;
+}
+
+.modal__container-confirm_delete {
+  min-height: auto;
 }
 
 .modal__container-preview_image {
@@ -140,6 +158,10 @@
   cursor: pointer;
 }
 
+.modal__button_disabled-wait_state:hover {
+  cursor: wait;
+}
+
 .modal__preview-image {
   object-fit: cover;
   max-width: 100%;
@@ -161,6 +183,14 @@
     line-height: 17px;
     height: 46px;
     margin-top: 45px;
+  }
+
+  .modal__button-delete_confirm {
+    margin-top: 0;
+  }
+
+  .modal__container-edit_avatar {
+    min-height: none;
   }
 
   .modal__close {
@@ -195,5 +225,9 @@
   .modal__heading {
     font-size: 18px;
     line-height: 22px;
+  }
+
+  .modal__heading-delete-confirm {
+    padding: 0;
   }
 }
