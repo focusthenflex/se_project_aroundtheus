@@ -159,11 +159,10 @@ function handleProfileEditSubmit({ name, description }) {
 
   validator.disableFormElements();
   modal.enableLoadingState("Saving...");
-  userInfo.setUserInfo({ name, description });
-
   api
     .updateProfile({ name, about: description })
     .then(() => {
+      userInfo.setUserInfo({ name, description });
       modal.toggleLoadingText(true, "Saved!");
       modal.close();
       modal.disableLoadingState();
