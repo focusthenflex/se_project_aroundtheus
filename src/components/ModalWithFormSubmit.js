@@ -27,11 +27,6 @@ class ModalWithFormSubmit extends Modal {
     this.removeWaitState();
     this.toggleLoadingText();
   }
-
-  enableLoadingState(loadingText) {
-    super.addWaitState();
-    this.toggleLoadingText(true, loadingText);
-  }
 }
 
 export default ModalWithFormSubmit;

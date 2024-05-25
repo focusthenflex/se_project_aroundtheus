@@ -14,6 +14,16 @@ export default class Modal {
     this.close = this.close.bind(this);
   }
 
+  enableLoadingState(loadingText) {
+    this.addWaitState();
+    this.toggleLoadingText(true, loadingText);
+  }
+
+  disableLoadingState() {
+    this.removeWaitState();
+    this.toggleLoadingText();
+  }
+
   addWaitState() {
     this._modalElement.classList.add("modal_opened-wait");
   }

@@ -10,15 +10,6 @@ export default class ModalWithForm extends Modal {
     this._submitButton = this._modalElement.querySelector("form button");
     this._initialButtonTextContent = this._submitButton.textContent.trim();
   }
-  enableLoadingState(loadingText) {
-    super.addWaitState();
-    this.toggleLoadingText(true, loadingText);
-  }
-
-  disableLoadingState() {
-    super.removeWaitState();
-    this.toggleLoadingText();
-  }
 
   close() {
     super.close();

@@ -76,8 +76,8 @@ function createCard(data) {
             .then(() => {
               card.deleteCard();
               modal.toggleLoadingText(true, "Deleted!");
-              modal.closeAfterSuccessfulSubmission(deleteCardValidator);
-              validator.enableFormElements();
+              modal.close();
+              modal.disableLoadingState();
             })
             .catch((err) => {
               console.error(err);
@@ -85,6 +85,7 @@ function createCard(data) {
             })
             .finally(() => {
               modal.toggleLoadingText(false);
+              validator.enableFormElements();
             });
         });
       },
@@ -164,8 +165,8 @@ function handleProfileEditSubmit({ name, description }) {
     .updateProfile({ name, about: description })
     .then(() => {
       modal.toggleLoadingText(true, "Saved!");
-      modal.closeAfterSuccessfulSubmission(editProfileValidator);
-      validator.enableFormElements();
+      modal.close();
+      modal.disableLoadingState();
     })
     .catch((err) => {
       console.error(err);
@@ -173,6 +174,7 @@ function handleProfileEditSubmit({ name, description }) {
     })
     .finally(() => {
       modal.toggleLoadingText();
+      validator.enableFormElements();
     });
 }
 
@@ -203,9 +205,8 @@ function handleAddCardSubmit({ title, url }) {
     .then((data) => {
       section.addItem(createCard(data), "prepend");
       modal.toggleLoadingText(true, "Created!");
-
-      modal.closeAfterSuccessfulSubmission(addCardValidator);
-      validator.enableFormElements();
+      modal.close();
+      modal.disableLoadingState();
     })
     .catch((err) => {
       console.error(err);
@@ -213,6 +214,7 @@ function handleAddCardSubmit({ title, url }) {
     })
     .finally(() => {
       modal.toggleLoadingText();
+      validator.enableFormElements();
     });
 }
 
@@ -227,9 +229,9 @@ function handleEditAvatarSubmit({ avatar }) {
     .updateAvatar({ avatar })
     .then(({ avatar }) => {
       userInfo.setUserInfo({ avatar });
-      modal.toggleLoadingText(true, "Updated!");
-      modal.closeAfterSuccessfulSubmission();
-      validator.enableFormElements();
+      modal.enableLoadingState("Updated!");
+      modal.close();
+      modal.disableLoadingState();
     })
     .catch((err) => {
       console.error(err);
@@ -237,6 +239,7 @@ function handleEditAvatarSubmit({ avatar }) {
     })
     .finally(() => {
       modal.toggleLoadingText();
+      validator.enableFormElements();
     });
 }
 
